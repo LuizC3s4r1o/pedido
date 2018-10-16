@@ -15,6 +15,7 @@ import com.lacsystem.pedido.domain.Cidade;
 import com.lacsystem.pedido.domain.Cliente;
 import com.lacsystem.pedido.domain.Endereco;
 import com.lacsystem.pedido.domain.Estado;
+import com.lacsystem.pedido.domain.ItemPedido;
 import com.lacsystem.pedido.domain.Pagamento;
 import com.lacsystem.pedido.domain.PagamentoComBoleto;
 import com.lacsystem.pedido.domain.PagamentoComCartao;
@@ -27,6 +28,7 @@ import com.lacsystem.pedido.repositories.CidadeRepository;
 import com.lacsystem.pedido.repositories.ClienteRepository;
 import com.lacsystem.pedido.repositories.EnderecoRepository;
 import com.lacsystem.pedido.repositories.EstadoRepository;
+import com.lacsystem.pedido.repositories.ItemPedidoRepository;
 import com.lacsystem.pedido.repositories.PagamentoRepository;
 import com.lacsystem.pedido.repositories.PedidoRepository;
 import com.lacsystem.pedido.repositories.ProdutoRepository;
@@ -57,6 +59,9 @@ public class PedidoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PedidoApplication.class, args);
@@ -122,13 +127,18 @@ public class PedidoApplication implements CommandLineRunner {
 		
 		pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
 		
+		ItemPedido itPed1 = new ItemPedido(ped1, p1, BigDecimal.valueOf(0.00), 1, BigDecimal.valueOf(2000.00));
+		ItemPedido itPed2 = new ItemPedido(ped1, p3, BigDecimal.valueOf(0.00), 2, BigDecimal.valueOf(80.00));
+		ItemPedido itPed3 = new ItemPedido(ped2, p2, BigDecimal.valueOf(100.00), 1, BigDecimal.valueOf(800.00));
 		
+		ped1.getItens().addAll(Arrays.asList(itPed1, itPed2));
+		ped1.getItens().addAll(Arrays.asList(itPed3));
 		
+		p1.getItens().addAll(Arrays.asList(itPed1));
+		p2.getItens().addAll(Arrays.asList(itPed3));
+		p3.getItens().addAll(Arrays.asList(itPed2));
 		
-		
-		
-		
-		
+		itemPedidoRepository.saveAll(Arrays.asList(itPed1, itPed2, itPed3));
 		
 		
 		
