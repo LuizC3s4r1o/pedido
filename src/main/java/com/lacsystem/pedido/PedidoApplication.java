@@ -1,6 +1,8 @@
 package com.lacsystem.pedido;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +15,20 @@ import com.lacsystem.pedido.domain.Cidade;
 import com.lacsystem.pedido.domain.Cliente;
 import com.lacsystem.pedido.domain.Endereco;
 import com.lacsystem.pedido.domain.Estado;
+import com.lacsystem.pedido.domain.Pagamento;
+import com.lacsystem.pedido.domain.PagamentoComBoleto;
+import com.lacsystem.pedido.domain.PagamentoComCartao;
+import com.lacsystem.pedido.domain.Pedido;
 import com.lacsystem.pedido.domain.Produto;
+import com.lacsystem.pedido.domain.enums.EstadoPagamento;
 import com.lacsystem.pedido.domain.enums.TipoCliente;
 import com.lacsystem.pedido.repositories.CategoriaRepository;
 import com.lacsystem.pedido.repositories.CidadeRepository;
 import com.lacsystem.pedido.repositories.ClienteRepository;
 import com.lacsystem.pedido.repositories.EnderecoRepository;
 import com.lacsystem.pedido.repositories.EstadoRepository;
+import com.lacsystem.pedido.repositories.PagamentoRepository;
+import com.lacsystem.pedido.repositories.PedidoRepository;
 import com.lacsystem.pedido.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -42,6 +51,12 @@ public class PedidoApplication implements CommandLineRunner {
 	
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(PedidoApplication.class, args);
@@ -91,6 +106,35 @@ public class PedidoApplication implements CommandLineRunner {
 		
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		
+		Pedido ped1 = new Pedido(null, LocalDateTime.now(), cli1, end1);
+		Pedido ped2 = new Pedido(null, LocalDateTime.now().minusDays(5).minusHours(3), cli1, end2);
+		
+		Pagamento pgto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pgto1);
+		
+		Pagamento pgto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, LocalDate.now().minusMonths(13), null);
+		ped2.setPagamento(pgto2);
+		
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		
+		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
+		
+		pagamentoRepository.saveAll(Arrays.asList(pgto1, pgto2));
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 }
