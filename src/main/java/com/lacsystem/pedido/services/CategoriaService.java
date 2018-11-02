@@ -11,8 +11,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.lacsystem.pedido.domain.Categoria;
-import com.lacsystem.pedido.domain.Cliente;
-import com.lacsystem.pedido.domain.Categoria;
 import com.lacsystem.pedido.dto.CategoriaDTO;
 import com.lacsystem.pedido.repositories.CategoriaRepository;
 import com.lacsystem.pedido.services.exceptions.DataIntegrityException;
