@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,7 +38,7 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy="cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
