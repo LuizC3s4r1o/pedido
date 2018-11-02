@@ -11,6 +11,8 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.lacsystem.pedido.domain.Categoria;
+import com.lacsystem.pedido.domain.Cliente;
+import com.lacsystem.pedido.domain.Categoria;
 import com.lacsystem.pedido.dto.CategoriaDTO;
 import com.lacsystem.pedido.repositories.CategoriaRepository;
 import com.lacsystem.pedido.services.exceptions.DataIntegrityException;
@@ -39,8 +41,9 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 
 	public void delete(Long id) {
@@ -63,6 +66,10 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
+	}
+	
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 
 }
