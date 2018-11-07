@@ -8,15 +8,13 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.lacsystem.pedido.domain.enums.TipoCliente;
@@ -34,6 +32,8 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
+	
+	@Column(unique=true)
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
