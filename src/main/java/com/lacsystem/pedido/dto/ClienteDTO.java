@@ -8,11 +8,14 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.lacsystem.pedido.domain.Cliente;
+import com.lacsystem.pedido.services.validation.ClienteUpdate;
 
 /**
  * @author Luiz.Cesario
  *
  */
+
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
