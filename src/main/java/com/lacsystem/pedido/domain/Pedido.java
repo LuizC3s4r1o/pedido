@@ -1,6 +1,7 @@
 package com.lacsystem.pedido.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,6 +57,14 @@ public class Pedido implements Serializable {
 		this.instante = instante;
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
+	}
+	
+	public BigDecimal getValorTotal() {
+		BigDecimal soma = BigDecimal.ZERO;
+		for (ItemPedido ip : itens) {
+			soma = soma.add(ip.getSubTotal());
+		}
+		return soma;
 	}
 
 	public Long getId() {
