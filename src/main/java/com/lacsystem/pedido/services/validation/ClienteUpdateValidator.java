@@ -17,11 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
 import com.lacsystem.pedido.domain.Cliente;
-import com.lacsystem.pedido.domain.enums.TipoCliente;
 import com.lacsystem.pedido.dto.ClienteDTO;
 import com.lacsystem.pedido.repositories.ClienteRepository;
 import com.lacsystem.pedido.resources.exceptions.FieldMessage;
-import com.lacsystem.pedido.services.validation.utils.BR;
 
 public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate, ClienteDTO> {
 	
