@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.lacsystem.pedido.services.DbService;
+import com.lacsystem.pedido.services.EmailService;
+import com.lacsystem.pedido.services.SmtpEmailService;
 
 /**
  * @author Luiz.Cesario
@@ -20,7 +22,7 @@ public class DevConfig {
 	@Autowired
 	private DbService dbService;
 	
-	@Value("spring.jpa.hibernate.ddl-auto")
+	@Value("${spring.jpa.hibernate.ddl-auto}")
 	private String strategy;
 
 	@Bean
@@ -29,7 +31,13 @@ public class DevConfig {
 		if(!"create".equals(strategy)) {
 			return false;
 		}
+		
 		dbService.instantiateTestDataBase();
 		return true;
+	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new SmtpEmailService();
 	}
 }
