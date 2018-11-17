@@ -18,9 +18,10 @@ import com.lacsystem.pedido.services.MockEmailService;
 @Profile("test")
 public class TestConfig {
 	
+	
 	@Autowired
 	private DbService dbService;
-
+	
 	@Bean
 	public boolean instantiateDataBase() {
 		dbService.instantiateTestDataBase();
