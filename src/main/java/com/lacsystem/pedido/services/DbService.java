@@ -21,6 +21,7 @@ import com.lacsystem.pedido.domain.PagamentoComCartao;
 import com.lacsystem.pedido.domain.Pedido;
 import com.lacsystem.pedido.domain.Produto;
 import com.lacsystem.pedido.domain.enums.EstadoPagamento;
+import com.lacsystem.pedido.domain.enums.Perfil;
 import com.lacsystem.pedido.domain.enums.TipoCliente;
 import com.lacsystem.pedido.repositories.CategoriaRepository;
 import com.lacsystem.pedido.repositories.CidadeRepository;
@@ -135,16 +136,22 @@ public class DbService {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
 		
-		Cliente cli1 = new Cliente(null, "José das Coves", "joao@gmail.com", "36378912375", TipoCliente.PESSOAFISICA, bCrypt.encode("2018@"));
+		Cliente cli1 = new Cliente(null, "José das Coves", "luiz.cesario@yahoo.com.br", "36378912375", TipoCliente.PESSOAFISICA, bCrypt.encode("2018@"));
 		cli1.getTelefones().addAll(Arrays.asList("45450000","974744747"));
+		
+		Cliente cli2 = new Cliente(null, "Maria Regina", "luiz.c3s4r1o@gmail.com", "32902428030", TipoCliente.PESSOAFISICA, bCrypt.encode("2018@"));
+		cli2.getTelefones().addAll(Arrays.asList("45450020","985748547"));
+		cli2.addPerfil(Perfil.ADMIN);
 		
 		Endereco end1 = new Endereco(null, "Rua das Coves", "1252", "Casa", "Flores", "13136136", cli1, cid1);
 		Endereco end2 = new Endereco(null, "Rua das Rosas", "200", "Apto 25", "Centro", "11000111", cli1, cid2);
+		Endereco end3 = new Endereco(null, "Rua das Chuva", "17", "Chacara", "Sitio pinhal", "15000111", cli2, cid3);
 		
 		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+		cli2.getEnderecos().addAll(Arrays.asList(end3));
 		
-		clienteRepository.saveAll(Arrays.asList(cli1));
-		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
 		
 		Pedido ped1 = new Pedido(null, LocalDateTime.now(), cli1, end1);
 		Pedido ped2 = new Pedido(null, LocalDateTime.now().minusDays(5).minusHours(3), cli1, end2);
