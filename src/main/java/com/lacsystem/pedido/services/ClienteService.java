@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lacsystem.pedido.domain.Cidade;
 import com.lacsystem.pedido.domain.Cliente;
 import com.lacsystem.pedido.domain.Endereco;
+import com.lacsystem.pedido.domain.enums.Perfil;
 import com.lacsystem.pedido.domain.enums.TipoCliente;
 import com.lacsystem.pedido.dto.ClienteDTO;
 import com.lacsystem.pedido.dto.ClienteNewDTO;
 import com.lacsystem.pedido.repositories.ClienteRepository;
 import com.lacsystem.pedido.repositories.EnderecoRepository;
+import com.lacsystem.pedido.security.UserSpringSecurity;
+import com.lacsystem.pedido.services.exceptions.AuthorizationException;
 import com.lacsystem.pedido.services.exceptions.DataIntegrityException;
 import com.lacsystem.pedido.services.exceptions.ObjectNotFoundException;
 
@@ -41,6 +44,11 @@ public class ClienteService {
 	private EnderecoRepository enderecoRepository;
 	
 	public Cliente find(Long id) {
+		UserSpringSecurity user = UserService.authenticated();
+		if(user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName(), null));
