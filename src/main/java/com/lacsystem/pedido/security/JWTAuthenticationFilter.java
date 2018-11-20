@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.lacsystem.pedido.security;
 
 import java.io.IOException;
