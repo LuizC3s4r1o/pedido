@@ -31,16 +31,12 @@ public class Cidade implements Serializable {
 		
 	}
 
-
-
 	public Cidade(Long id, String nome, Estado estado) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.estado = estado;
 	}
-
-
 
 	public Long getId() {
 		return id;
